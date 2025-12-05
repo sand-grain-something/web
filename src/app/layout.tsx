@@ -3,11 +3,11 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/components/common/theme-provider";
 import { Nippo } from "./font";
 
-import Navbar from "@/components/common/navbar";
+import SmartNavbar from "@/components/navbar";
 
 export const metadata: Metadata = {
-  title: "Sand Grain Something",
-  description: "Some description about it",
+  title: "Sand Analysis Mapping System - Automated Grain Size Estimation",
+  description: "Low-cost camera-based automated mapping system for beach sediment grain size estimation, classification, and GPS mapping.",
 };
 
 export default function RootLayout({
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className={`antialiased ${Nippo.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          {/* <Navbar /> */}
+          <SmartNavbar />
           {children}
         </ThemeProvider>
       </body>

@@ -1,25 +1,65 @@
-import Container from "@/components/common/container";
-import { BackgroundRippleEffect } from "@/components/ui/background-ripple-effect";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+'use client';
+
+import { useState } from 'react';
+import PremiumLoader from '@/components/loader';
+import HeroSection from '@/components/hero';
+import CinematicScrollSection from '@/components/cinematic-scroll';
+import MapSection from '@/components/map-section';
+import BeachDetailPanel from '@/components/beach-detail-panel';
+import SandAnalysisModal from '@/components/sand-analysis-modal';
+import ExploreSection from '@/components/explore-section';
+import Footer from '@/components/footer';
+import { Beach } from '@/data/beaches';
 
 export default function Home() {
+  const [selectedBeach, setSelectedBeach] = useState<Beach | null>(null);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
+  const [sandAnalysisBeach, setSandAnalysisBeach] = useState<Beach | null>(null);
+  const [isSandModalOpen, setIsSandModalOpen] = useState(false);
+
+  const handleBeachSelect = (beach: Beach) => {
+    setSelectedBeach(beach);
+    setIsPanelOpen(true);
+  };
+
+  const handleViewSandAnalysis = (beach: Beach) => {
+    setSandAnalysisBeach(beach);
+    setIsSandModalOpen(true);
+    setIsPanelOpen(false);
+  };
+
+  const handleClosePanel = () => {
+    setIsPanelOpen(false);
+    setSelectedBeach(null);
+  };
+
+  const handleCloseSandModal = () => {
+    setIsSandModalOpen(false);
+    setSandAnalysisBeach(null);
+  };
+
   return (
-    <div className="relative overflow-hidden">
-      <BackgroundRippleEffect />
-      <Container className="flex justify-center h-screen items-center p-4">
-        <div className="flex flex-col items-center gap-6">
-          <h1 className="text-6xl font-semibold tracking-tight">
-            Sand Grain Size Mapping
-          </h1>
-          <p className="text-2xl tracking-wide font-light">
-            This web app is to show the data of sand grain
-          </p>
-          <Link href="/feed">
-            <Button>Get Started</Button>
-          </Link>
-        </div>
-      </Container>
-    </div>
+    <>
+      <PremiumLoader />
+      <HeroSection />
+      <CinematicScrollSection />
+      <MapSection onBeachSelect={handleBeachSelect} />
+      <ExploreSection
+        onBeachSelect={handleBeachSelect}
+        onViewSandAnalysis={handleViewSandAnalysis}
+      />
+      <BeachDetailPanel
+        beach={selectedBeach}
+        isOpen={isPanelOpen}
+        onClose={handleClosePanel}
+        onViewSandAnalysis={handleViewSandAnalysis}
+      />
+      <SandAnalysisModal
+        beach={sandAnalysisBeach}
+        isOpen={isSandModalOpen}
+        onClose={handleCloseSandModal}
+      />
+      <Footer />
+    </>
   );
 }

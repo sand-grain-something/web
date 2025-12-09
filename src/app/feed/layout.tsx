@@ -1,22 +1,21 @@
 "use client";
 
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import type { Metadata } from "next";
 import React from "react";
 import { motion } from "motion/react";
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconSettings,
-} from "@tabler/icons-react";
+import { IconArrowLeft, IconBrandTabler } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 import { ModeToggle } from "@/components/common/mode-toggle";
-import { BadgeQuestionMark, Map, Microscope } from "lucide-react";
-
-// export const metadata: Metadata = {
-//   title: "Sand Grain Something",
-//   description: "Some description about it",
-// };
+import {
+  BadgeQuestionMark,
+  Biohazard,
+  Database,
+  MapIcon,
+  Microscope,
+} from "lucide-react";
+import { Dashboard } from "./dashboard";
+import { Map } from "./map";
+import DataPage from "./data-page";
 
 export default function RootLayout({
   children,
@@ -32,10 +31,10 @@ export default function RootLayout({
       ),
     },
     {
-      label: "Explore Map",
+      label: "Explore Data",
       href: "#",
       icon: (
-        <Map className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+        <Database className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
     {
@@ -45,6 +44,14 @@ export default function RootLayout({
         <Microscope className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
       ),
     },
+    {
+      label: "Explore Map",
+      href: "#",
+      icon: (
+        <MapIcon className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
+      ),
+    },
+
     {
       label: "Get Help",
       href: "#",
@@ -61,6 +68,7 @@ export default function RootLayout({
     },
   ];
   const [open, setOpen] = React.useState(false);
+  const [currentPage, setCurrentPage] = React.useState(0);
 
   return (
     <div
@@ -72,10 +80,14 @@ export default function RootLayout({
       <Sidebar open={open} setOpen={setOpen}>
         <SidebarBody className="justify-between gap-10">
           <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
+            <div className="text-primary">{open ? <Logo /> : <LogoIcon />}</div>
             <div className="mt-8 flex flex-col gap-2">
               {links.map((link, idx) => (
-                <SidebarLink key={idx} link={link} />
+                <SidebarLink
+                  onClick={() => setCurrentPage(idx)}
+                  key={idx}
+                  link={link}
+                />
               ))}
             </div>
           </div>
@@ -84,61 +96,31 @@ export default function RootLayout({
           </div>
         </SidebarBody>
       </Sidebar>
-      <Dashboard />
+
+      <div className={`overflow-auto ${currentPage === 0 && "overflow-clip"}`}>
+        {currentPage === 0 && <Dashboard />}
+        {currentPage === 1 && <DataPage />}
+      </div>
+      {/* <Map /> */}
     </div>
   );
 }
 
 export const Logo = () => {
   return (
-    <a
-      href="#"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
-    >
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
+    <div className="flex items-center gap-2">
+      <Biohazard className="h-5 w-5 shrink-0" />
       <motion.span
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="whitespace-pre text-black dark:text-white"
+        className="whitespace-pre"
       >
         SandGrain
       </motion.span>
-    </a>
+    </div>
   );
 };
 
 export const LogoIcon = () => {
-  return (
-    <a
-      href="#"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black"
-    >
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
-    </a>
-  );
-};
-
-const Dashboard = () => {
-  return (
-    <div className="flex flex-1">
-      <div className="flex h-full w-full flex-1 flex-col gap-2 rounded-tl-2xl border border-neutral-200 bg-white p-2 md:p-10 dark:border-neutral-700 dark:bg-neutral-900">
-        <div className="flex gap-2">
-          {[...new Array(4)].map((i, idx) => (
-            <div
-              key={"first-array-demo-1" + idx}
-              className="h-20 w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800"
-            ></div>
-          ))}
-        </div>
-        <div className="flex flex-1 gap-2">
-          {[...new Array(2)].map((i, idx) => (
-            <div
-              key={"second-array-demo-1" + idx}
-              className="h-full w-full animate-pulse rounded-lg bg-gray-100 dark:bg-neutral-800"
-            ></div>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
+  return <Biohazard className="h-5 w-5 shrink-0" />;
 };

@@ -12,8 +12,13 @@
   "dependencies": {
     "@radix-ui/react-slot": "^1.2.4",
     "@tabler/icons-react": "^3.35.0",
+    "@types/d3": "^7.4.3",
+    "@types/leaflet": "^1.9.21",
+    "@types/topojson-client": "^3.1.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "d3": "^7.9.0",
+    "leaflet": "^1.9.4",
     "lucide-react": "^0.555.0",
     "motion": "^12.23.25",
     "next": "16.0.6",
@@ -21,7 +26,8 @@
     "ogl": "^1.0.11",
     "react": "19.2.0",
     "react-dom": "19.2.0",
-    "tailwind-merge": "^3.4.0"
+    "tailwind-merge": "^3.4.0",
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
     "@biomejs/biome": "2.2.0",

@@ -89,7 +89,6 @@ export default function DataPage() {
               </span>
             </h1>
           </div>
-          <div className="h-20 w-full rounded-lg bg-muted"></div>
         </div>
         <div className="flex flex-1 gap-2">
           <div className="h-full w-full">
@@ -121,7 +120,7 @@ export default function DataPage() {
                         style={{ paddingTop: "60%" }}
                       >
                         <Image
-                          src={`http://127.0.0.1:8080/image/sample.jpg`}
+                          src={`https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg`}
                           alt=""
                           layout="fill"
                           className="object-cover"

@@ -25,7 +25,7 @@ export default function RootLayout({
     },
     {
       label: "Sand Analysis",
-      href: "#",
+      href: "/feed/anal",
       icon: <Microscope className="h-5 w-5 shrink-0" />,
     },
     {
